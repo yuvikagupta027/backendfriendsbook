@@ -92,57 +92,10 @@ app.post("/fetchuserprofile", (req, res) => {
     })
 })
 
-// app.post("/fetchotherusers", async (req, res) => {
-// try {
-//     const usersWithProfilePics = await db.collection("users").aggregate([
-//         {
-//             $lookup: {
-//                 from: "profilepic",
-//                 localField: "_id",
-//                 foreignField: "Id",
-//                 as: "profilePics"
-//             }
-//         },
-//         {
-//             $addFields: {
-//                 latestProfilePic: { $arrayElemAt: ["$profilePics", 0] } // Get the first (latest) picture
-//             }
-//         },
-//         {
-//             $project: {
-//                 profilePics: 0 // Exclude full profilePics array from result
-//             }
-//         }
-//     ]).toArray();
-
-//     console.log(usersWithProfilePics);
-// } catch (error) {
-//     console.error("Error fetching users:", error);
-//     res.status(500).send({ error: "Internal Server Error" });
-// }
-// });
-
-
 app.post("/fetchotherusers", (req, res) => {
     db.collection("users").find().toArray().then((succ) => {
         res.send(succ);
         console.log(succ);
-
-        //         var ar = [];
-
-        //         for (var i = 1; i < succ.length; i++) {
-        //             // console.log(succ[i]._id);
-        //             db.collection("profilepic").find({ Id: succ[i]._id + "" }).sort({ Datetime: -1 }).limit(1).toArray().then((succ) => {
-        //                 // console.log(succ);
-        //                 // res.send("ok");
-        //                 if (succ) {
-        //                     ar.push(succ[0]);
-        //                 } else {
-        //                 }
-        //             })
-        //         }
-        //         console.log(ar);
-
     })
 });
 
